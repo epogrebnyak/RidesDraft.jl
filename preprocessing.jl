@@ -1,8 +1,8 @@
 # EP: есть ли аналог в julia для `import ZipFile as zf`?
 using ZipFile
-using ProgressMeter
+using ProgressMeter: showprogress
 using JSON3
-using Geodesy
+using Geodesy:       LatLon
 
 
 """
