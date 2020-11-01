@@ -34,12 +34,11 @@ RAW_DATA_URL = ("https://dl.dropboxusercontent.com" *
 LOCAL_ZIPFILE = "data_samples-json2.zip"
 
 save_local(RAW_DATA_URL, LOCAL_ZIPFILE)
-# Uncomment for first use
-# raw_rides = read_local(LOCAL_ZIPFILE)
-@assert length(jsons) == 3585
+# May comment/uncomment for use in REPL to save time
+raw_rides = read_local(LOCAL_ZIPFILE)
 @assert length(raw_rides) == 3585
 
-
+# EP: может быть JSON типа raw_rides - нужно как-то новый тип создать?
 function car_id(raw_ride)
     raw_ride.info.car_id
 end
@@ -51,20 +50,25 @@ end
 ids = car_ids(raw_rides)
 @assert length(ids) == 131
 
-struct Loc
+struct Location 
     timestamp::Int
     coord::LatLon{Float64}
 end
-Loc(xs::AbstractVector) = Loc(xs[1], LatLon(xs[3], xs[2]))
+Location(xs::AbstractVector) = Location(xs[1], LatLon(xs[3], xs[2]))
 
-Route = Array{Loc,1}
+Route = Array{Location,1}
 
 function make_route(raw_ride)
-    map(Loc, raw_ride.data)
+    map(Location, raw_ride.data)
 end
 
-route5 = get_route(raw_rides[5])
+route5 = make_route(raw_rides[5])
 
+# EP: Эта часть занимает 1:30, подозрительно много
 routes = @showprogress map(make_route, raw_rides) 
 
 length(routes)
+
+typeof(routes)
+#Array{Array{Location,1},1}
+#EP Может ли выводить тип Array{Route,1}?
