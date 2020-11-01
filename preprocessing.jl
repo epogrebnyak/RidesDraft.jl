@@ -1,5 +1,5 @@
 using ZipFile
-using ProgressMeter: showprogress
+using ProgressMeter: @showprogress
 using JSON3
 using Geodesy:       LatLon
 
@@ -45,7 +45,7 @@ save_local(RAW_DATA_URL, LOCAL_ZIPFILE)
 raw_rides = read_local(LOCAL_ZIPFILE)
 @assert length(raw_rides) == 3585
 
-# EP: может быть JSON типа raw_rides - нужно как-то новый тип создать?
+# EP: может быть для JSON типа raw_rides - нужно какой-то новый тип создать?
 function car_id(raw_ride)
     raw_ride.info.car_id
 end
