@@ -4,6 +4,11 @@ using ProgressMeter
 using JSON3
 using Geodesy
 
+
+"""
+Save zip file from URL to local disk. 
+Overwrite when force = true.
+"""
 function save_local(url, zip_file_path, force = false)
     if !isfile(zip_file_path) | force
         @info "Downloading raw data from $(url)."
@@ -14,6 +19,9 @@ function save_local(url, zip_file_path, force = false)
 end
 
 
+"""
+Read list of JSON objects from zip file.
+"""
 function read_local(zip_file_path)
     result = []
     r = ZipFile.Reader(zip_file_path)
